@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adote um Pet - Gerenciamento</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <header>
+        <h1>Adote um Pet - Gerenciamento</h1>
+    </header>
+    <main>
+        <form action="" method="post">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="nome">Nome do Pet</label>
+                    <input type="text" name="nome" id="nome">
+                </div>
+                <div class="field">
+                    <label for="tipo">Tipo do Pet</label>
+                    <select name="tipo" id="tipo">
+                        <option value="" disabled selected>Selecione o tipo</option>
+                        <option value="cachorro">Cachorro</option>
+                        <option value="gato">Gato</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="raca">Raça</label>
+                    <select name="raca" id="raca">
+                        <option value="" disabled selected>Selecione a raça</option>
+                        <option value="siames">Siamês</option>
+                        <option value="vira-lata">Vira-lata</option>
+                        <option value="base">Base</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="porte">Porte</label>
+                    <select name="porte" id="porte">
+                        <option value="" disabled selected>Selecione o porte</option>
+                        <option value="pequeno">Pequeno</option>
+                        <option value="medio">Médio</option>
+                        <option value="grande">Grande</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="idade">Idade</label>
+                    <select name="idade" id="idade">
+                        <option value="" disabled selected>Selecione a idade</option>
+                        <option value="filhote">Filhote</option>
+                        <option value="adulto">Adulto</option>
+                        <option value="idoso">Idoso</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="foto">Foto do Pet</label>
+                    <input type="file" name="foto" id="foto" accept="image/*">
+                </div>
+                <div class="field full">
+                    <label for="descricao">Observação</label>
+                    <textarea name="descricao" id="descricao" rows="6" placeholder="Descrição do Pet"></textarea>
+                </div>
+                <div class="actions">
+                    <button type="submit">Adicionar Pet</button>
+                </div>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
