@@ -22,7 +22,9 @@ try {
    $comando->bindValue(':obs',$obs);
    
    $comando->execute();
-   echo "Cadastro realizado com sucesso!";
+     echo "Cadastro realizado com sucesso!";
+    header("Location: ../pet-lista.php");
+
 
 } catch (PDOException $err) {
     error_log($err->getMessage());

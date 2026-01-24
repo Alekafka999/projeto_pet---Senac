@@ -49,3 +49,31 @@ input[type=submit]{
     display: flex;
     margin-top: 10px;
 }
+
+table{
+    width: 100%;
+    
+}
+
+td,th {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    text-align: left;
+    background: #3804e2;
+    color: #000;
+    text-align: left;
+
+}
+
+tr:nth-child(even){
+    background: #6a95e9;
+}
+
+tr:hover{
+    background: #01184f;
+}   

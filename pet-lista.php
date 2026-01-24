@@ -47,6 +47,9 @@ try{
             <td><?php echo $pet['idade']; ?></td>
             <td><?php echo $pet['obs']; ?></td>
             </tr>
+        <td>
+            <a href="backend/pet-deletar.php?id=<?php echo $pet['id']; ?>">Excluir</a>
+        </td>
                     
         <?php
             endforeach;
