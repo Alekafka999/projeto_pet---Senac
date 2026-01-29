@@ -26,17 +26,36 @@ CREATE TABLE IF NOT EXISTS `tb_cadastro` (
   `especie` varchar(50) NOT NULL,
   `raca` varchar(50) NOT NULL,
   `porte` char(1) NOT NULL,
-  `idade` varchar(50) NOT NULL,
+  `idade` char(50) NOT NULL,
   `obs` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_pet.tb_cadastro: ~4 rows (aproximadamente)
+-- Copiando dados para a tabela db_pet.tb_cadastro: ~1 rows (aproximadamente)
 INSERT INTO `tb_cadastro` (`id`, `nome`, `especie`, `raca`, `porte`, `idade`, `obs`) VALUES
-	(1, 'Faísca', 'Gato', 'Siamês', 'P', '2', 'Lindo lindo!'),
-	(2, 'Frajola', 'Gato', 'Persa', 'M', '2', ''),
-	(3, 'Rex', 'Cachorro', 'Husky Siberiano', 'G', '3', ''),
-	(4, 'Lulu', 'Cachorro', 'Pinscher', 'P', '3', '');
+	(1, 'Pou', 'outros', 'Basse', 'P', '999', 'De outro planeta, ET');
+
+-- Copiando estrutura para tabela db_pet.tb_especie
+CREATE TABLE IF NOT EXISTS `tb_especie` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `especie` varchar(25) NOT NULL,
+  `data_cadastro` datetime DEFAULT current_timestamp(),
+  `ativo` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Copiando dados para a tabela db_pet.tb_especie: ~0 rows (aproximadamente)
+
+-- Copiando estrutura para tabela db_pet.tb_raca
+CREATE TABLE IF NOT EXISTS `tb_raca` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `raca` varchar(25) NOT NULL,
+  `data_cadastro` datetime DEFAULT current_timestamp(),
+  `ativo` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Copiando dados para a tabela db_pet.tb_raca: ~0 rows (aproximadamente)
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
