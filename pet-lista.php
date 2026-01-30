@@ -65,6 +65,7 @@ try {
                 <td><?php echo $pet['idade'];?></td>
                 <td><?php echo $pet['obs'];?></td>
                 <td>
+                    <a href="pet-editar.php?id=<?php echo $pet['id'];?>">Editar</a>
                     <a href="backend/pet-deletar.php?id=<?php echo $pet['id'];?>">Deletar</a>
                 </td>
             </tr>

@@ -1,32 +1,39 @@
 <?php
 require_once "backend/conexao.php";
 
-try {
-   $sql = "SELECT 
-    tb_cadastro.*,
-    tb_especie.especie,
-    tb_raca.raca 
-   FROM tb_cadastro 
-   INNER JOIN tb_especie ON tb_especie.id = tb_cadastro.id_especie 
-   INNER JOIN tb_raca ON tb_raca.id = tb_cadastro.id_raca"; 
+$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
-   $comando = $conexao->prepare($sql);
-
-   $comando->execute();
-
-   $pets = $comando->fetchAll(PDO::FETCH_ASSOC);
-   
-//    echo "<pre>";
-//    var_dump($pets);
-    
-} catch (PDOException $err) {
-    error_log($err->getMessage());
-    echo "Não foi possível listar os dados!";    
+if (!$id) {
+    echo "ID do pet inválido.";
+    exit;
 }
 
+try {
+    $sql = 'SELECT id, nome, id_especie, id_raca, porte, idade, obs FROM tb_cadastro WHERE id = :id';
+    $comando = $conexao->prepare($sql);
+    $comando->bindParam(":id", $id, PDO::PARAM_INT);
+    $comando->execute();
+    $pet = $comando->fetch(PDO::FETCH_ASSOC);
 
+    if (!$pet) {
+        echo "Pet não encontrado.";
+        exit;
+    }
 
+    $sql = 'SELECT id, especie FROM tb_especie WHERE ativo = 1';
+    $comando = $conexao->prepare($sql);
+    $comando->execute();
+    $especies = $comando->fetchAll(PDO::FETCH_ASSOC);
 
+    $sql = 'SELECT id, raca FROM tb_raca WHERE ativo = 1';
+    $comando = $conexao->prepare($sql);
+    $comando->execute();
+    $racas = $comando->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $err) {
+    error_log($err->getMessage());
+    echo "Não foi possível carregar os dados!";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,44 +41,61 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adote um Pet - Lista</title>
+    <title>Adote um PET - Editar</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <?php
-        require_once "menu.php";
-    ?>
+    <?php require_once "menu.php"; ?>
     <main>
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Nome</th>
-                <th>Espécie</th>
-                <th>Raça</th>
-                <th>Porte</th>
-                <th>Idade</th>
-                <th>Obs</th>
-                <th>Ações</th>
-            </tr>
-            <?php
-                foreach($pets as $pet):            
-            ?>
-            <tr>
-                <td><?php echo $pet['id'];?></td>
-                <td><?php echo $pet['nome'];?></td>
-                <td><?php echo $pet['especie'];?></td>
-                <td><?php echo $pet['raca'];?></td>
-                <td><?php echo $pet['porte'];?></td>
-                <td><?php echo $pet['idade'];?></td>
-                <td><?php echo $pet['obs'];?></td>
-                <td>
-                    <a href="backend/pet-deletar.php?id=<?php echo $pet['id'];?>">Deletar</a>
-                </td>
-            </tr>
-            <?php
-                endforeach;
-            ?>
-        </table>        
+        <form action="backend/pet-atualizar.php" method="POST">
+            <input type="hidden" name="id" value="<?php echo $pet['id']; ?>">
+            <div id="grid">
+                <div>
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" id="nome" required value="<?php echo $pet['nome']; ?>">
+                </div>
+                <div>
+                    <label for="especie">Espécie</label>
+                    <select name="especie" id="especie" required>
+                        <option value="" disabled>Selecione...</option>
+                        <?php foreach ($especies as $especie): ?>
+                            <option value="<?php echo $especie['id']; ?>" <?php echo ($especie['id'] == $pet['id_especie']) ? "selected" : ""; ?>>
+                                <?php echo $especie['especie']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="raca">Raça</label>
+                    <select name="raca" id="raca" required>
+                        <option value="" disabled>Selecione...</option>
+                        <?php foreach ($racas as $raca): ?>
+                            <option value="<?php echo $raca['id']; ?>" <?php echo ($raca['id'] == $pet['id_raca']) ? "selected" : ""; ?>>
+                                <?php echo $raca['raca']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="porte">Porte</label>
+                    <select name="porte" id="porte" required>
+                        <option value="" disabled>Selecione...</option>
+                        <option value="P" <?php echo ($pet['porte'] == "P") ? "selected" : ""; ?>>Pequeno</option>
+                        <option value="M" <?php echo ($pet['porte'] == "M") ? "selected" : ""; ?>>Médio</option>
+                        <option value="G" <?php echo ($pet['porte'] == "G") ? "selected" : ""; ?>>Grande</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="idade">Idade</label>
+                    <input type="text" name="idade" id="idade" required value="<?php echo $pet['idade']; ?>">
+                </div>
+            </div>
+            <div>
+                <label for="obs">Observação</label>
+                <textarea name="obs" id="obs"><?php echo $pet['obs']; ?></textarea>
+            </div>
+            <input type="submit" value="Atualizar">
+        </form>
     </main>
     <script src="js/menu.js"></script>
 </body>
